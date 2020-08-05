@@ -18,6 +18,7 @@ const BooksList = () => {
   const history = useHistory();
   const locationSearch = queryString.parse(location.search);
   const { page } = locationSearch;
+  const filterDefault = { type: 'all', values: [] };
 
   // convert the page to an integer for proper type
   const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
@@ -25,7 +26,10 @@ const BooksList = () => {
   const [books, setBooks] = useState([]);
   const [booksCount, setBooksCount] = useState(0);
   const [pageCount, setPageCout] = useState(1);
+  // searchValue is set to control the form in the header
   const [searchValue, setSerarchValue] = useState('');
+  // searchText is set to display the results in TopBar
+  const [searchText, setSearchText] = useState('');
   const [filters, setFilters] = useState([]);
 
   // useEffect calls
@@ -46,12 +50,19 @@ const BooksList = () => {
 
       setBooks(books);
       setBooksCount(count);
+      console.log(filters);
 
       // using Math.ceil to round to the next number so that last page is also visible
       setPageCout(Math.ceil(count / itemsPerPage));
 
       // once the data has been fetched set the loading to false
       setLoading(false);
+
+      // check if the data was fetched due to search
+      if (searchValue !== '') {
+        // pass the text on to display the resuls
+        setSearchText(searchValue);
+      }
     };
 
     fetchData();
@@ -65,6 +76,13 @@ const BooksList = () => {
   const handleClickPreviousPage = () => setCurrentPage(currentPage - 1);
   const handleClickNextPage = () => setCurrentPage(currentPage + 1);
 
+  const handleReset = () => {
+    setFilters([]);
+    setSerarchValue('');
+    setSearchText('');
+    setCurrentPage(1);
+  };
+
   const handleSearchSubmit = (e) => {
     e.preventDefault();
 
@@ -73,7 +91,7 @@ const BooksList = () => {
       // reset current page to 1
       setCurrentPage(1);
       // these are default filters to search by
-      setFilters([{ type: 'all', values: [searchValue] }]);
+      setFilters([{ ...filterDefault, values: [searchValue] }]);
     }
   };
 
@@ -97,6 +115,8 @@ const BooksList = () => {
         booksCount={booksCount}
         handlePrevPage={handleClickPreviousPage}
         handleNextPage={handleClickNextPage}
+        handleReset={handleReset}
+        searchText={searchText}
       />
 
       {loading ? <Loader /> : <Row>{renderBooks()}</Row>}

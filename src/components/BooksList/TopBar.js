@@ -10,12 +10,22 @@ const TopBar = ({
   booksCount,
   handlePrevPage,
   handleNextPage,
+  handleReset,
+  searchText,
 }) => (
   <Row className="py-4">
     <Col xs={12} sm={3} lg={6} className="d-flex align-middle">
       <p className="h5 my-auto">
-        <b className="text-primary">{booksCount}</b> books
+        <b className="text-primary">{booksCount}</b>{' '}
+        {booksCount > 1 || booksCount === 0 ? 'books' : 'book'}{' '}
+        {searchText !== '' && 'found'}
       </p>
+
+      {searchText !== '' && (
+        <Button className="ml-3 my-auto" onClick={handleReset}>
+          Reset
+        </Button>
+      )}
     </Col>
     <Col className="d-flex justify-content-end align-middle">
       <Button
@@ -45,6 +55,8 @@ TopBar.propTypes = {
   booksCount: PropTypes.number.isRequired,
   handlePrevPage: PropTypes.func.isRequired,
   handleNextPage: PropTypes.func.isRequired,
+  handleReset: PropTypes.func.isRequired,
+  searchText: PropTypes.string.isRequired,
 };
 
 export default TopBar;
