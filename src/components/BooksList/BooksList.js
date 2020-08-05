@@ -17,7 +17,7 @@ const BooksList = () => {
   const location = useLocation();
   const history = useHistory();
   const locationSearch = queryString.parse(location.search);
-  const { page } = locationSearch;
+  const { page, search } = locationSearch;
   const filterDefault = { type: 'all', values: [] };
 
   // convert the page to an integer for proper type
@@ -27,10 +27,12 @@ const BooksList = () => {
   const [booksCount, setBooksCount] = useState(0);
   const [pageCount, setPageCout] = useState(1);
   // searchValue is set to control the form in the header
-  const [searchValue, setSerarchValue] = useState('');
+  const [searchValue, setSerarchValue] = useState(search || '');
   // searchText is set to display the results in TopBar
-  const [searchText, setSearchText] = useState('');
-  const [filters, setFilters] = useState([]);
+  const [searchText, setSearchText] = useState(search || '');
+  const [filters, setFilters] = useState(
+    search !== '' && search ? [{ ...filterDefault, values: [search] }] : [],
+  );
 
   // useEffect calls
   useEffect(() => {
@@ -50,7 +52,6 @@ const BooksList = () => {
 
       setBooks(books);
       setBooksCount(count);
-      console.log(filters);
 
       // using Math.ceil to round to the next number so that last page is also visible
       setPageCout(Math.ceil(count / itemsPerPage));
@@ -69,8 +70,8 @@ const BooksList = () => {
   }, [currentPage, filters]);
 
   useEffect(() => {
-    history.push(`?page=${currentPage}`);
-  }, [currentPage, history]);
+    history.push(`?page=${currentPage}&search=${searchText}`);
+  }, [currentPage, history, searchText]);
 
   // functions
   const handleClickPreviousPage = () => setCurrentPage(currentPage - 1);
@@ -92,6 +93,8 @@ const BooksList = () => {
       setCurrentPage(1);
       // these are default filters to search by
       setFilters([{ ...filterDefault, values: [searchValue] }]);
+      // update the query params in the browser
+      history.push(`?page=${currentPage}&search=${searchText}`);
     }
   };
 
