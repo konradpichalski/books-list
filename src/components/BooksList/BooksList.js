@@ -9,7 +9,7 @@ import api from '../../api/api';
 import Header from '../Header/Header';
 import TopBar from './TopBar';
 import BookInfo from './BookInfo';
-import Loader from './Loader';
+import Loader from '../Loader/Loader';
 
 const BooksList = () => {
   // constants and state
