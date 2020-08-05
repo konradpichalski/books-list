@@ -23,6 +23,7 @@ const BooksList = () => {
   // convert the page to an integer for proper type
   const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
   const [loading, setLoading] = useState(true);
+  const [initialLoading, setInitialLoading] = useState(true);
   const [books, setBooks] = useState([]);
   const [booksCount, setBooksCount] = useState(0);
   const [pageCount, setPageCout] = useState(1);
@@ -57,7 +58,9 @@ const BooksList = () => {
       setPageCout(Math.ceil(count / itemsPerPage));
 
       // once the data has been fetched set the loading to false
+      // and initial loading to false
       setLoading(false);
+      setInitialLoading(false);
 
       // check if the data was fetched due to search
       if (searchValue !== '') {
@@ -120,6 +123,7 @@ const BooksList = () => {
         handleNextPage={handleClickNextPage}
         handleReset={handleReset}
         searchText={searchText}
+        loading={initialLoading}
       />
 
       {loading ? <Loader /> : <Row>{renderBooks()}</Row>}

@@ -12,6 +12,7 @@ const TopBar = ({
   handleNextPage,
   handleReset,
   searchText,
+  loading,
 }) => (
   <Row className="py-4">
     <Col xs={12} sm={3} lg={6} className="d-flex align-middle">
@@ -28,18 +29,20 @@ const TopBar = ({
       )}
     </Col>
     <Col className="d-flex justify-content-end align-middle">
+      <span className="text-secondary vertical-center my-auto mx-2">
+        {!loading && `Page ${currentPage} / ${pageCount}`}
+      </span>
+
       <Button
-        className="mr-3 my-3 flex-fill"
+        className="mr-2 my-3"
         disabled={currentPage <= 1}
         onClick={handlePrevPage}
       >
         Previous page
       </Button>
-      <span className="text-secondary vertical-center my-auto mx-1">
-        Page <b>{currentPage}</b> / <b>{pageCount}</b>
-      </span>
+
       <Button
-        className="ml-3 my-3 flex-fill"
+        className="ml-2 my-3"
         disabled={currentPage >= pageCount}
         onClick={handleNextPage}
       >
@@ -57,6 +60,7 @@ TopBar.propTypes = {
   handleNextPage: PropTypes.func.isRequired,
   handleReset: PropTypes.func.isRequired,
   searchText: PropTypes.string.isRequired,
+  loading: PropTypes.bool.isRequired,
 };
 
 export default TopBar;
