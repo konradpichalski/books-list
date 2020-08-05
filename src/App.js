@@ -1,18 +1,14 @@
 import React from 'react';
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+
+import BooksList from './components/BooksList/BooksList';
 
 const App = () => (
-  <Container>
-    <Row>
-      <Col>
-        <h1 className="h1 primary">App</h1>
-        <Button variant="primary">This is a test</Button>
-      </Col>
-    </Row>
-  </Container>
+  <Router>
+    <Switch>
+      <Route exact path="/" component={BooksList} />
+    </Switch>
+  </Router>
 );
 
 export default App;
