@@ -47,6 +47,12 @@ const BooksList = () => {
     fetchData();
   }, []);
 
+  // render helper functions
+  const renderBooks = () =>
+    books.map((book) => {
+      return <BookInfo key={book.id} book={book} />;
+    });
+
   return (
     <Container>
       <Header />
@@ -57,9 +63,7 @@ const BooksList = () => {
         booksCount={booksCount}
       />
 
-      <Row>
-        <BookInfo />
-      </Row>
+      <Row>{renderBooks()}</Row>
     </Container>
   );
 };
