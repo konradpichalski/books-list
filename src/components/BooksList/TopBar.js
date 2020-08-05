@@ -17,8 +17,8 @@ const TopBar = ({
     <Col xs={12} sm={3} lg={6} className="d-flex align-middle">
       <p className="h5 my-auto">
         <b className="text-primary">{booksCount}</b>{' '}
-        {booksCount > 1 || booksCount === 0 ? 'books' : 'book'}{' '}
-        {searchText !== '' && 'found'}
+        {booksCount > 1 || booksCount === 0 ? 'books' : 'book'}
+        {searchText !== '' && ' found'}
       </p>
 
       {searchText !== '' && (
