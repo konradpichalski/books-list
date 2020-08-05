@@ -32,7 +32,11 @@ const Header = ({
               onChange={(e) => onFormControlChange(e.target.value)}
               value={searchValue}
             />
-            <Button variant="outline-light" type="submit">
+            <Button
+              variant="outline-light"
+              type="submit"
+              disabled={searchValue === ''}
+            >
               Search
             </Button>
           </Form>
