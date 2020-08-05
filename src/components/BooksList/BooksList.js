@@ -25,6 +25,8 @@ const BooksList = () => {
   const [books, setBooks] = useState([]);
   const [booksCount, setBooksCount] = useState(0);
   const [pageCount, setPageCout] = useState(1);
+  const [searchValue, setSerarchValue] = useState('');
+  const [filters, setFilters] = useState([]);
 
   // useEffect calls
   useEffect(() => {
@@ -35,7 +37,7 @@ const BooksList = () => {
       const dataset = await api.fetchBooks({
         page: currentPage,
         itemsPerPage: 20,
-        filters: [],
+        filters,
       });
 
       const {
@@ -53,7 +55,7 @@ const BooksList = () => {
     };
 
     fetchData();
-  }, [currentPage]);
+  }, [currentPage, filters]);
 
   useEffect(() => {
     history.push(`?page=${currentPage}`);
@@ -63,6 +65,18 @@ const BooksList = () => {
   const handleClickPreviousPage = () => setCurrentPage(currentPage - 1);
   const handleClickNextPage = () => setCurrentPage(currentPage + 1);
 
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+
+    // check if you should do the search at all
+    if (searchValue !== '') {
+      // reset current page to 1
+      setCurrentPage(1);
+      // these are default filters to search by
+      setFilters([{ type: 'all', values: [searchValue] }]);
+    }
+  };
+
   // render helper functions
   const renderBooks = () =>
     books.map((book) => {
@@ -71,7 +85,11 @@ const BooksList = () => {
 
   return (
     <Container>
-      <Header />
+      <Header
+        searchValue={searchValue}
+        onFormControlChange={setSerarchValue}
+        onFormSubmit={handleSearchSubmit}
+      />
 
       <TopBar
         currentPage={currentPage}

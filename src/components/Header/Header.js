@@ -7,7 +7,12 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const Header = ({ hideSearchForm }) => (
+const Header = ({
+  hideSearchForm,
+  onFormSubmit,
+  onFormControlChange,
+  searchValue,
+}) => (
   <Row>
     <Col>
       <Navbar
@@ -19,9 +24,17 @@ const Header = ({ hideSearchForm }) => (
         <Navbar.Brand>Books list</Navbar.Brand>
 
         {!hideSearchForm && (
-          <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light">Search</Button>
+          <Form inline onSubmit={onFormSubmit}>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+              onChange={(e) => onFormControlChange(e.target.value)}
+              value={searchValue}
+            />
+            <Button variant="outline-light" type="submit">
+              Search
+            </Button>
           </Form>
         )}
       </Navbar>
@@ -31,6 +44,9 @@ const Header = ({ hideSearchForm }) => (
 
 Header.propTypes = {
   hideSearchForm: PropTypes.bool,
+  onFormSubmit: PropTypes.func,
+  onFormControlChange: PropTypes.func,
+  searchValue: PropTypes.string,
 };
 
 export default Header;
