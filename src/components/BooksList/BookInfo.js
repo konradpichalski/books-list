@@ -13,7 +13,7 @@ const BookInfo = ({
     book_pages,
   },
 }) => (
-  <Col md={12} md={6} lg={4}>
+  <Col xs={12} md={6} lg={4}>
     <Card className="my-3" bg="light">
       <Card.Body>
         <Card.Title className="text-primary">{book_title}</Card.Title>
