@@ -10,6 +10,7 @@ import Header from '../Header/Header';
 import TopBar from './TopBar';
 import BookInfo from './BookInfo';
 import Loader from '../Loader/Loader';
+import NoSearchResults from './NoSearchResults';
 
 const BooksList = () => {
   // constants and state
@@ -81,6 +82,7 @@ const BooksList = () => {
   const handleClickNextPage = () => setCurrentPage(currentPage + 1);
 
   const handleReset = () => {
+    setInitialLoading(true);
     setFilters([]);
     setSerarchValue('');
     setSearchText('');
@@ -92,6 +94,9 @@ const BooksList = () => {
 
     // check if you should do the search at all
     if (searchValue !== '') {
+      // set initialLoading to true to prevent displaying wrong data
+      setInitialLoading(true);
+
       // reset current page to 1
       setCurrentPage(1);
       // these are default filters to search by
@@ -115,16 +120,21 @@ const BooksList = () => {
         onFormSubmit={handleSearchSubmit}
       />
 
-      <TopBar
-        currentPage={currentPage}
-        pageCount={pageCount}
-        booksCount={booksCount}
-        handlePrevPage={handleClickPreviousPage}
-        handleNextPage={handleClickNextPage}
-        handleReset={handleReset}
-        searchText={searchText}
-        loading={initialLoading}
-      />
+      {!loading && (currentPage > pageCount || books.length === 0) ? (
+        <NoSearchResults handleReset={handleReset} />
+      ) : (
+        !initialLoading && (
+          <TopBar
+            currentPage={currentPage}
+            pageCount={pageCount}
+            booksCount={booksCount}
+            handlePrevPage={handleClickPreviousPage}
+            handleNextPage={handleClickNextPage}
+            handleReset={handleReset}
+            searchText={searchText}
+          />
+        )
+      )}
 
       {loading ? <Loader /> : <Row>{renderBooks()}</Row>}
     </Container>
