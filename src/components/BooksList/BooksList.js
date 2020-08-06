@@ -64,12 +64,6 @@ const BooksList = () => {
       // and initial loading to false
       setLoading(false);
       setInitialLoading(false);
-
-      // check if the data was fetched due to search
-      if (searchValue !== '') {
-        // pass the text on to display the resuls
-        setSearchText(searchValue);
-      }
     };
 
     fetchData();
@@ -85,6 +79,7 @@ const BooksList = () => {
 
   const handleReset = () => {
     setInitialLoading(true);
+    setLoading(true);
     setFilters([]);
     setSerarchValue('');
     setSearchText('');
@@ -98,6 +93,7 @@ const BooksList = () => {
     if (searchValue !== '') {
       // set initialLoading to true to prevent displaying wrong data
       setInitialLoading(true);
+      setLoading(true);
 
       // reset current page to 1
       setCurrentPage(1);
@@ -105,6 +101,9 @@ const BooksList = () => {
       setFilters([{ ...filterDefault, values: [searchValue] }]);
       // update the query params in the browser
       history.push(`?page=${currentPage}&search=${searchText}`);
+
+      // pass the text on to display the resuls
+      setSearchText(searchValue);
     }
   };
 
