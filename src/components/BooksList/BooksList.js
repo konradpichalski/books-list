@@ -22,7 +22,9 @@ const BooksList = () => {
   const filterDefault = { type: 'all', values: [] };
 
   // convert the page to an integer for proper type
-  const [currentPage, setCurrentPage] = useState(parseInt(page) || 1);
+  const [currentPage, setCurrentPage] = useState(
+    parseInt(page) > 0 ? parseInt(page) : 1,
+  );
   const [loading, setLoading] = useState(true);
   const [initialLoading, setInitialLoading] = useState(true);
   const [books, setBooks] = useState([]);
