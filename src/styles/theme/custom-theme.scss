@@ -1,0 +1,7 @@
+@import '../config';
+
+$theme-colors: (
+  'primary': $tealColor,
+);
+
+@import '~bootstrap/scss/bootstrap.scss';
