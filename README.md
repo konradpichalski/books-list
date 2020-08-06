@@ -4,11 +4,11 @@ Books list is a front-end React app build using `create-react-app` with `react-b
 
 It utiles the API POST request, which results are then displayed to the user. It can be done by paginated results:
 
-![Image of the app front page](/src/images/screen1.png)
+![Image of the app front page](/src/images/screen1.jpg)
 
 or using search input for the filtered results:
 
-![Image of the app search functionality](/src/images/screen2.png)
+![Image of the app search functionality](/src/images/screen2.jpg)
 
 ## Addtional libraries
 
